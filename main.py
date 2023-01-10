@@ -14,6 +14,7 @@ print(input_image.mode)
 offset = 0
 base = 16
 
+# Quantize the pixel color.
 def quantize_color(R, G, B):
     factor = 1
 
@@ -31,6 +32,7 @@ for y in range(1, height-1):
 
         quantization_err = tuple(map(lambda i, j: i - j, (R, G, B), (newR, newG, newB)))
         
+        # Diffuse the error, main idea of Floyd-Steinberg dithering.
         pixel_map[x + 1, y    ] = tuple(pixel_map[x + 1, y    ][i] + floor(quantization_err[i] * ((7 + offset) / base)) for i in range(3))
         pixel_map[x + 1, y + 1] = tuple(pixel_map[x + 1, y + 1][i] + floor(quantization_err[i] * ((1 + offset) / base)) for i in range(3))
         pixel_map[x    , y + 1] = tuple(pixel_map[x    , y + 1][i] + floor(quantization_err[i] * ((5 + offset) / base)) for i in range(3))
