@@ -10,6 +10,7 @@ width, height = input_image.size
 
 print(input_image.mode)
 
+# These may be changed for different effects.
 offset = 0
 base = 16
 
@@ -21,6 +22,7 @@ def quantize_color(R, G, B):
     newB = round(factor * B / 255.0) * (255 // factor)
     return (newR, newG, newB)
 
+# Skipping the pixels on the edges.
 for y in range(1, height-1):
     for x in range(1, width-1):
         R, G, B = pixel_map[x, y]
